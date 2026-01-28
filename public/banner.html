@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Tracker Banner</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #0a0a0f;
+    }
+
+    .banner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+      position: relative;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+
+    .orb-1 {
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, #00d4ff 0%, transparent 70%);
+      top: -120px; left: 8%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, #7b2cbf 0%, transparent 70%);
+      bottom: -120px; right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    .orb-3 {
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, #00ff88 0%, transparent 70%);
+      top: 55%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .particles { position: absolute; inset: 0; }
+
+    .particle {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: #00d4ff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+      animation: rise 15s linear infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 14s; background: #7b2cbf; box-shadow: 0 0 10px #7b2cbf; }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; animation-duration: 11s; }
+    .particle:nth-child(4) { left: 40%; animation-delay: 1s; animation-duration: 16s; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+    .particle:nth-child(5) { left: 50%; animation-delay: 3s; animation-duration: 13s; }
+    .particle:nth-child(6) { left: 60%; animation-delay: 5s; animation-duration: 15s; background: #7b2cbf; box-shadow: 0 0 10px #7b2cbf; }
+    .particle:nth-child(7) { left: 70%; animation-delay: 2s; animation-duration: 12s; }
+    .particle:nth-child(8) { left: 80%; animation-delay: 4s; animation-duration: 14s; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+    .particle:nth-child(9) { left: 90%; animation-delay: 1s; animation-duration: 11s; }
+
+    @keyframes rise {
+      0% { bottom: -10px; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { bottom: 100%; opacity: 0; }
+    }
+
+    /* shorter + lower so banner can be shorter */
+    .chart-line {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -15px;     /* push it slightly off-screen */
+      height: 70px;      /* shorter */
+      opacity: 0.22;
+    }
+
+    .chart-line svg { width: 100%; height: 100%; }
+
+    .chart-path {
+      fill: none;
+      stroke: url(#chartGradient);
+      stroke-width: 2;
+      stroke-linecap: round;
+      animation: drawLine 3s ease-out forwards, glow 2s ease-in-out infinite alternate;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 2px #00d4ff); }
+      to { filter: drop-shadow(0 0 8px #00d4ff); }
+    }
+
+    .chart-area { fill: url(#areaGradient); opacity: 0.16; }
+
+    .hex-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300d4ff' fill-opacity='1'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .scanline {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+      );
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <div class="grid-overlay"></div>
+    <div class="hex-pattern"></div>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="particles">
+      <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+      <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+      <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+
+    <div class="chart-line">
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="chartGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#00ff88;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#7b2cbf;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:0.3" />
+            <stop offset="100%" style="stop-color:#00d4ff;stop-opacity:0" />
+          </linearGradient>
+        </defs>
+        <path class="chart-area"
+          d="M0,80 Q100,60 200,70 T400,40 T600,55 T800,30 T1000,50 L1000,100 L0,100 Z" />
+        <path class="chart-path"
+          d="M0,80 Q100,60 200,70 T400,40 T600,55 T800,30 T1000,50" />
+      </svg>
+    </div>
+
+    <div class="scanline"></div>
+  </div>
+</body>
+</html>
