@@ -7,7 +7,7 @@ const Banner = () => {
     <Box
       sx={{
         position: "relative",
-        height: { xs: 380, md: 400 }, // reduced height
+        height: { xs: 380, md: 500 }, // reduced height
         overflow: "hidden",
       }}
     >
@@ -45,7 +45,8 @@ const Banner = () => {
               fontWeight: "bold",
               lineHeight: 1.1,
               fontSize: { xs: "2.6rem", sm: "3.4rem", md: "4rem" }, // responsive heading
-              mb: 1,
+              mt:9,
+              mb:2,
             }}
           >
             Crypto Tracker
